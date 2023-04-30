@@ -1,23 +1,12 @@
-package com.example.shareThought.model;
+package com.example.shareThought.requestDTO;
 
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.beans.BeanUtils;
 
-@Getter
-@Setter
-@Entity
-@Table
-public class Thoughts {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long thoughtId ;
+import com.example.shareThought.model.Thoughts;
+
+public class ThoughtsRequestDTO {
 	private Long userId;
 	private String thoughtType ;
 	private String content ;
@@ -30,12 +19,6 @@ public class Thoughts {
 	private Boolean isLikeAllowed ;
 	private Boolean isCommentAllowed ;
 	private Boolean isDelete;
-	public Long getThoughtId() {
-		return thoughtId;
-	}
-	public void setThoughtId(Long thoughtId) {
-		this.thoughtId = thoughtId;
-	}
 	public Long getUserId() {
 		return userId;
 	}
@@ -109,4 +92,11 @@ public class Thoughts {
 		this.isDelete = isDelete;
 	}
 	
+	public Thoughts convertToModel() {
+		Thoughts thought= new Thoughts();
+		BeanUtils.copyProperties(this, thought);
+		thought.setIsDelete(false);
+		return thought;
+	}
+
 }
